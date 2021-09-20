@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>Windows Terminal与SSH</title>
+    <link href="/2021/09/20/Windows%20Terminal%E4%B8%8ESSH/"/>
+    <url>/2021/09/20/Windows%20Terminal%E4%B8%8ESSH/</url>
+    
+    <content type="html"><![CDATA[<p>最近新装了电脑，需要重新迁移一下Hexo Blog。Hexo使用起来很便利，但是迁移环境的时候往往需要将本地的文件保存下来，通过U盘或者云存储转移整个Hexo项目，如果有更方便的方法，比如把项目直接上传至GitHub，或者直接能从GitHub Pages的项目中恢复Hexo项目的话，当我没说。<br />Anyway，我现在需要重新配置一次Node环境和恢复先前的Hexo项目。挺久没更新了，刚好可以写篇文章水一下。</p><h2 id="配置node-git环境"><a class="markdownIt-Anchor" href="#配置node-git环境"></a> 配置Node、Git环境</h2><p>这部分的话，我算是配环境老手了。这次既然要重新装了环境，我就打算用NVM安装Node，顺带实现Node版本的管理，Git的话直接官网下载就可以了。<br />在Windows下安装NVM就没有像Mac那么麻烦了，在Mac安装NVM上踩了不少的坑…<br />Windows下只要在这个GitHub项目 <a href="https://github.com/coreybutler/nvm-windows" target="_blank" rel="noopener">nvm-windows</a> 下下载nvm-setup，直接安装即可。<br />需要注意的是，安装的文件目录名里不要有空格和中文字符，不然容易报错或者Terminal显示乱码。<br />安装cnpm</p><pre><code class="hljs jboss-cli">npm install -g cnpm <span class="hljs-params">--registry=https</span>:<span class="hljs-string">//registry.npm.taobao.org</span> <span class="hljs-string">//</span>不然node_modules 下载太慢cnpm install hexo-cli -g <span class="hljs-string">//</span>全局安装hexo</code></pre><p>在我使用Windows Terminal，执行上述cnpm安装指令时，terminal 报了一个错误</p><pre><code class="hljs dsconfig"><span class="hljs-built_in">set-ExecutionPolicy</span> <span class="hljs-string">RemoteSigned</span></code></pre><p>这个时候需要使用管理员身份，打开PowerShell，输入</p><pre><code class="hljs dsconfig"><span class="hljs-built_in">set-ExecutionPolicy</span> <span class="hljs-string">RemoteSigned</span></code></pre><p>再继续执行</p><h2 id="恢复先前的hexo项目"><a class="markdownIt-Anchor" href="#恢复先前的hexo项目"></a> 恢复先前的Hexo项目</h2><p>因为装机时CPU出了点问题，我排查问题的时候就重装了系统，导致磁盘里的Hexo项目没有保存下来。所幸的是OneDrive上刚好保存了我放在桌面文件夹下的Hexo项目。我将项目底下的node_modules(200+MB)删除之后，整个项目的大小大概在60MB左右，即使是这样，OneDrive也依然下载了快二十分钟。这个速度无愧于我对OneDrive的认知。<br />使用cnpm安装之后，整个项目就恢复如初，和以前一样了。</p><h2 id="windows-terminal"><a class="markdownIt-Anchor" href="#windows-terminal"></a> Windows Terminal</h2><p>我可喜欢这个东西了，比CMD和PowerShell好看多了，而且还支持WSL和多种颜色主题，配环境爱好者狂喜。</p><p>Windows Terminal 微软商店里直接安装就好了，方便快捷。</p><p>和VS Code 相似，Windows Terminal也有个JSON形式的配置文件。 在终端的Tab栏上的小三角，点开有个设置，设置界面左下角有一个打开JSON文件，在里面可以随意配置自己想要的界面主题，或者是快捷打开方式。</p><p>我这里就简单配置了毛玻璃特效和在文件管理器的地址栏里输入wt打开当前文件夹目录的Terminal，配置如下：</p><pre><code class="hljs actionscript"><span class="hljs-string">"defaults"</span>: &#123;   <span class="hljs-comment">// Put settings here that you want to apply to all profiles.</span>            <span class="hljs-string">"useAcrylic"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 启用毛玻璃</span>            <span class="hljs-string">"acrylicOpacity"</span>: <span class="hljs-number">0.6</span>, <span class="hljs-comment">// useAcrylic 设置为 true 时，设置透明度，接受 0-1 之间的浮点值</span>            <span class="hljs-string">"startingDirectory"</span>: <span class="hljs-string">"."</span> <span class="hljs-comment">//打开当前文件夹目录的Terminal</span>        &#125;,</code></pre><h2 id="windows配置ssh"><a class="markdownIt-Anchor" href="#windows配置ssh"></a> Windows配置SSH</h2><p>既然换了电脑，远程服务器的SSH也需要重新配置一下了</p><p>首先先生成一个新的rsa公钥私钥，默认生成在用户目录的.ssh文件夹下</p><pre><code class="hljs ebnf"><span class="hljs-attribute">ssh-keygen -t rsa -c</span></code></pre><p>然后在服务器的/root/.ssh/authorized_keys里添加id_rsa.pub里的内容。这样之后，就可以直接在Windows Terminal直接使用SSH命令连接到远程服务器(前提是安装了Open-SSH)。</p><p>不过这时候连接服务器的命令可能是长这样：</p><pre><code class="hljs nginx"><span class="hljs-attribute">ssh</span> root<span class="hljs-variable">@xxx</span>.xxx.xxx.xxx</code></pre><p>还需要自己记下服务器的IP地址，也太麻烦了吧。</p><p>那肯定不需要那么麻烦，还是有办法给服务器设置别名的。</p><p>在Windows用户目录的.ssh文件夹下，创建一个config文件，注意不要有后缀名，在里面编辑这些信息：</p><pre><code class="hljs routeros">Host 服务器别名HostName 服务器IP地址User 连接服务器的用户，比如rootPort 22 SSH端口</code></pre><p>设置好之后，就不需要自己手动打IP地址连接了，用了这个方法我都可以把Putty卸载了，相见恨晚。</p><pre><code class="hljs nginx"><span class="hljs-attribute">ssh</span> 服务器别名</code></pre><h2 id="尾声"><a class="markdownIt-Anchor" href="#尾声"></a> 尾声</h2><p>随便水了这篇文章，也是同时想看看我的Hexo Blog恢复了没有，如果恢复了的话，应该是可以在我的Github Pages上看到这篇文章。之后再研究看看如何通过Github hooks 或者Action，将文章更新消息同步推送到Telegram里面。有缘再去试看看，也不知道下次更新啥时候了，嘻嘻。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Window Terminal</tag>
+      
+      <tag>Tips</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>使用JavaScript实现各种排序算法</title>
+    <link href="/2020/10/03/%E4%BD%BF%E7%94%A8JavaScript%E5%AE%9E%E7%8E%B0%E5%90%84%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
+    <url>/2020/10/03/%E4%BD%BF%E7%94%A8JavaScript%E5%AE%9E%E7%8E%B0%E5%90%84%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[<p>用惯了语言自带的 sort，还没有自己系统归纳各种排序，硬要写排序的话估计只能想出个冒泡…</p><p>趁现在赶紧补一补.。</p><p>既然想入前端的坑，就用  JS 来试着写写各种排序吧！</p><p>》》<a href="https://leetcode-cn.com/problems/sort-an-array/" target="_blank" rel="noopener">在LeetCode中尝试</a> 《《</p><h2 id="冒泡排序"><a class="markdownIt-Anchor" href="#冒泡排序"></a> 冒泡排序</h2><p>冒泡排序只在相邻元素大小不符合要求时才调换他们位置，不会改变相同元素之间的相对顺序，所以它是稳定的排序算法。</p><ol><li>一般解法</li></ol><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;nums.length; i++) &#123;<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = i; j&lt;nums.length; j++) &#123;            <span class="hljs-keyword">if</span> (nums[i] &gt; nums[j]) &#123; <span class="hljs-comment">// 升序</span>                <span class="hljs-keyword">let</span> tmp = nums[i];                nums[i] = nums[j];                nums[j] = tmp;            &#125;        &#125;    &#125;    <span class="hljs-keyword">return</span> nums;&#125;</code></pre><ol start="2"><li>JS的解构赋值</li></ol><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> sortArray =<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;nums.length; i++) &#123;<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = i; j&lt;nums.length; j++) &#123;[nums[i], nums[j]] = [nums[j], nums[i]];&#125;&#125;<span class="hljs-keyword">return</span> nums;&#125;</code></pre><table><thead><tr><th>平均时间复杂度</th><th>最好情况</th><th>最坏情况</th><th>空间复杂度</th></tr></thead><tbody><tr><td>O(n²)</td><td>O(n)</td><td>O(n²)</td><td>O(1)</td></tr></tbody></table><h2 id="选择排序"><a class="markdownIt-Anchor" href="#选择排序"></a> 选择排序</h2><p>选择排序也是两层循环，内层循环每次执行一遍，挑出本次待排序的元素中最小/大的一个，存放在数组的排序后位置。</p><p>选择排序每次交换的元素都有可能不是相邻的，因此它可能改变了相同值元素的相对位置。因此选择排序不稳定。</p><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;number[]&#125;</span> <span class="hljs-variable">nums</span></span></span><span class="hljs-comment"> * <span class="hljs-doctag">@return <span class="hljs-type">&#123;number[]&#125;</span></span></span><span class="hljs-comment"> */</span><span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;nums.length<span class="hljs-number">-1</span>; i++) &#123;        <span class="hljs-keyword">let</span> sel=nums[i];  <span class="hljs-comment">//选中的最小值</span>        <span class="hljs-keyword">let</span> n = i;  <span class="hljs-comment">//最小值的索引</span>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j=i+<span class="hljs-number">1</span>; j&lt;nums.length; j++) &#123;            <span class="hljs-keyword">if</span> (nums[j] &lt; sel) &#123;                sel = nums[j];                n = j;            &#125;        &#125;        nums[n] = nums[i];        nums[i] = sel;    &#125;    <span class="hljs-keyword">return</span> nums;&#125;;</code></pre><table><thead><tr><th>平均时间复杂度</th><th>最好情况</th><th>最坏情况</th><th>空间复杂度</th></tr></thead><tbody><tr><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr></tbody></table><h2 id="插入排序"><a class="markdownIt-Anchor" href="#插入排序"></a> 插入排序</h2><p>插入排序将数组分成两个部分，前半部分为排序部分，后半部分为待插入的元素部分。插入排序不会影响相同值元素的相对位置，所以是稳定的排序。</p><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;number[]&#125;</span> <span class="hljs-variable">nums</span></span></span><span class="hljs-comment"> * <span class="hljs-doctag">@return <span class="hljs-type">&#123;number[]&#125;</span></span></span><span class="hljs-comment"> */</span><span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i&lt;nums.length; i++) &#123;       <span class="hljs-keyword">let</span> temp = nums[i];       <span class="hljs-keyword">let</span> j = i<span class="hljs-number">-1</span>;       <span class="hljs-keyword">for</span>(j; j&gt;=<span class="hljs-number">0</span>; j--) &#123;           <span class="hljs-keyword">if</span>(nums[j]&lt;=temp) <span class="hljs-keyword">break</span>; <span class="hljs-comment">// 找到插入的位置时break;</span>           nums[j+<span class="hljs-number">1</span>] = nums[j];<span class="hljs-comment">// 将值比temp大的元素后移一位</span>       &#125;       nums[j+<span class="hljs-number">1</span>] = temp;<span class="hljs-comment">// 完成插入操作</span>    &#125;    <span class="hljs-keyword">return</span> nums;&#125;;</code></pre><table><thead><tr><th>平均时间复杂度</th><th>最好情况</th><th>最坏情况</th><th>空间复杂度</th></tr></thead><tbody><tr><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr></tbody></table><h2 id="希尔排序"><a class="markdownIt-Anchor" href="#希尔排序"></a> 希尔排序</h2><p>希尔排序可以看作是一个冒泡排序或者插入排序的变形。希尔排序在每次排序的时候都把数组拆分成若干个序列，一个序列的相邻的元素索引相隔固定的距离 gap, 每一轮对这些序列进行冒泡或者插入排序，然后再缩小 gap 得到新的序列，一一排序，直到 gap 为1。</p><h2 id="快速排序"><a class="markdownIt-Anchor" href="#快速排序"></a> 快速排序</h2><p>快速排序借用了分治的思想，并基于冒泡排序做了改进，它由C.A.R. Hoare在1962年提出。它将数组拆分为两个子数组，其中一个子数组的所有元素都比另一个子数组的元素小，然后对这两个子数组再重复进行上述操作，直到数组不可拆分，排序完成。</p><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;number[]&#125;</span> <span class="hljs-variable">nums</span></span></span><span class="hljs-comment"> * <span class="hljs-doctag">@return <span class="hljs-type">&#123;number[]&#125;</span></span></span><span class="hljs-comment"> */</span><span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;    <span class="hljs-keyword">if</span>(nums.length &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> nums;    quickSort(nums,<span class="hljs-number">0</span>,nums.length<span class="hljs-number">-1</span>);    <span class="hljs-keyword">return</span> nums;&#125;;<span class="hljs-comment">// 递归</span><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">quickSort</span>(<span class="hljs-params">nums, left, right</span>) </span>&#123;    <span class="hljs-keyword">if</span>(left&gt;=right) <span class="hljs-keyword">return</span>;    <span class="hljs-keyword">let</span> partitionIndex = partition(nums,left, right);    quickSort(nums,partitionIndex+<span class="hljs-number">1</span>, right);    quickSort(nums,left, partitionIndex<span class="hljs-number">-1</span>);    <span class="hljs-keyword">return</span> nums;&#125;<span class="hljs-comment">// 分区</span><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">partition</span>(<span class="hljs-params">nums, left, right</span>) </span>&#123;    <span class="hljs-keyword">let</span> pivot = right; <span class="hljs-comment">//规定pivot为序列最右值</span>    <span class="hljs-keyword">let</span> leftIndex = left;    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = left; i&lt;=right; i++) &#123;        <span class="hljs-keyword">if</span>(nums[i] &lt; nums[pivot]) &#123;            <span class="hljs-comment">// 遍历，将小于pivot的的元素与当前leftindex的元素交换，leftindex自增</span>            [nums[i],nums[leftIndex]] = [nums[leftIndex], nums[i]];            leftIndex++;        &#125;    &#125;    <span class="hljs-comment">// 将pivot所在的元素与自增后的leftindex所指元素交换，即可分好区</span>    [nums[pivot],nums[leftIndex]] = [nums[leftIndex], nums[pivot]];    <span class="hljs-comment">// 返回交换完的pivot所在位置</span>    <span class="hljs-keyword">return</span> leftIndex;&#125;</code></pre><table><thead><tr><th style="text-align:center">平均时间复杂度</th><th style="text-align:center">最好情况</th><th style="text-align:center">最坏情况</th><th style="text-align:center">空间复杂度</th></tr></thead><tbody><tr><td style="text-align:center">O(nlog₂n)</td><td style="text-align:center">O(nlog₂n)</td><td style="text-align:center">O(n²)</td><td style="text-align:center">O(nlog₂n)</td></tr></tbody></table>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>算法</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>堆和栈的区别</title>
+    <link href="/2020/08/18/%E5%A0%86%E5%92%8C%E6%A0%88%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <url>/2020/08/18/%E5%A0%86%E5%92%8C%E6%A0%88%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    
+    <content type="html"><![CDATA[<p>非原创，原文链接 =&gt; <a href="https://blog.csdn.net/hairetz/article/details/4141043" target="_blank" rel="noopener">堆和栈的区别</a></p><h2 id="一-预备知识程序的内存分配"><a class="markdownIt-Anchor" href="#一-预备知识程序的内存分配"></a> 一、预备知识—程序的内存分配</h2><p>一个由C/C++编译的程序占用的内存分为以下几个部分<br />1、栈区（stack）—  由编译器自动分配释放  ，存放函数的参数值，局部变量的值等。其<br />操作方式类似于数据结构中的栈。<br />2、堆区（heap）  —  一般由程序员分配释放，  若程序员不释放，程序结束时可能由OS回<br />收  。注意它与数据结构中的堆是两回事，分配方式倒是类似于链表，呵呵。<br />3、全局区（静态区）（static）—，全局变量和静态变量的存储是放在一块的，初始化的<br />全局变量和静态变量在一块区域，  未初始化的全局变量和未初始化的静态变量在相邻的另<br />一块区域。  -  程序结束后由系统释放。<br />4、文字常量区  —常量字符串就是放在这里的。  程序结束后由系统释放<br />5、程序代码区—存放函数体的二进制代码。</p><h3 id="例子程序"><a class="markdownIt-Anchor" href="#例子程序"></a> 例子程序</h3><p>这是一个前辈写的，非常详细</p><pre><code class="hljs c"><span class="hljs-comment">//main.cpp  </span> <span class="hljs-keyword">int</span>  a  =  <span class="hljs-number">0</span>;  全局初始化区   <span class="hljs-keyword">char</span>  *p1;  全局未初始化区   main()   &#123;   <span class="hljs-keyword">int</span>  b;  栈   <span class="hljs-keyword">char</span>  s[]  =  <span class="hljs-string">"abc"</span>;  栈   <span class="hljs-keyword">char</span>  *p2;  栈   <span class="hljs-keyword">char</span>  *p3  =  <span class="hljs-string">"123456"</span>;  <span class="hljs-number">123456</span>/<span class="hljs-number">0</span>在常量区，p3在栈上。   <span class="hljs-keyword">static</span>  <span class="hljs-keyword">int</span>  c  =<span class="hljs-number">0</span>；  全局（静态）初始化区   p1  =  (<span class="hljs-keyword">char</span>  *)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">10</span>);   p2  =  (<span class="hljs-keyword">char</span>  *)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">20</span>);</code></pre><p>分配得来得10和20字节的区域就在堆区。<br />strcpy(p1,  “123456”);  123456/0放在常量区，编译器可能会将它与p3所指向的&quot;123456&quot;<br />优化成一个地方。<br />}</p><h2 id="二-堆和栈的理论知识"><a class="markdownIt-Anchor" href="#二-堆和栈的理论知识"></a> 二、堆和栈的理论知识</h2><h3 id="21-申请方式"><a class="markdownIt-Anchor" href="#21-申请方式"></a> 2.1  申请方式</h3><p>stack:<br />由系统自动分配。  例如，声明在函数中一个局部变量  int  b;  系统自动在栈中为b开辟空<br />间<br />heap:<br />需要程序员自己申请，并指明大小，在c中malloc函数<br />如p1  =  (char  *)malloc(10);<br />在C++中用new运算符<br />如p2  =  new  char[10];<br />但是注意p1、p2本身是在栈中的。</p><h3 id="22-申请后系统的响应"><a class="markdownIt-Anchor" href="#22-申请后系统的响应"></a> 2.2  申请后系统的响应</h3><p>栈：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢<br />出。<br />堆：首先应该知道操作系统有一个记录空闲内存地址的链表，当系统收到程序的申请时，<br />会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表<br />中删除，并将该结点的空间分配给程序，另外，对于大多数系统，会在这块内存空间中的<br />首地址处记录本次分配的大小，这样，代码中的delete语句才能正确的释放本内存空间。<br />另外，由于找到的堆结点的大小不一定正好等于申请的大小，系统会自动的将多余的那部<br />分重新放入空闲链表中。</p><h3 id="23-申请大小的限制"><a class="markdownIt-Anchor" href="#23-申请大小的限制"></a> 2.3  申请大小的限制</h3><p>栈：在Windows下,栈是向低地址扩展的数据结构，是一块连续的内存的区域。这句话的意<br />思是栈顶的地址和栈的最大容量是系统预先规定好的，在WINDOWS下，栈的大小是2M（也有<br />的说是1M，总之是一个编译时就确定的常数），如果申请的空间超过栈的剩余空间时，将<br />提示overflow。因此，能从栈获得的空间较小。<br />堆：堆是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用链表来存储<br />的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。堆的大小<br />受限于计算机系统中有效的虚拟内存。由此可见，堆获得的空间比较灵活，也比较大。</p><h3 id="24-申请效率的比较"><a class="markdownIt-Anchor" href="#24-申请效率的比较"></a> 2.4  申请效率的比较：</h3><p>栈由系统自动分配，速度较快。但程序员是无法控制的。<br />堆是由new分配的内存，一般速度比较慢，而且容易产生内存碎片,不过用起来最方便.<br />另外，在WINDOWS下，最好的方式是用VirtualAlloc分配内存，他不是在堆，也不是在栈是<br />直接在进程的地址空间中保留一块内存，虽然用起来最不方便。但是速度快，也最灵活。</p><h3 id="25-堆和栈中的存储内容"><a class="markdownIt-Anchor" href="#25-堆和栈中的存储内容"></a> 2.5  堆和栈中的存储内容</h3><p>栈：  在函数调用时，第一个进栈的是主函数中后的下一条指令（函数调用语句的下一条可<br />执行语句）的地址，然后是函数的各个参数，在大多数的C编译器中，参数是由右往左入栈<br />的，然后是函数中的局部变量。注意静态变量是不入栈的。<br />当本次函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地<br />址，也就是主函数中的下一条指令，程序由该点继续运行。<br />堆：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容由程序员安排。</p><h3 id="26-存取效率的比较"><a class="markdownIt-Anchor" href="#26-存取效率的比较"></a> 2.6  存取效率的比较</h3><p>char  s1[]  =  “aaaaaaaaaaaaaaa”;<br />char  *s2  =  “bbbbbbbbbbbbbbbbb”;<br />aaaaaaaaaaa是在运行时刻赋值的；<br />而bbbbbbbbbbb是在编译时就确定的；<br />但是，在以后的存取中，在栈上的数组比指针所指向的字符串(例如堆)快。<br />比如：</p><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>  </span> <span class="hljs-function"><span class="hljs-keyword">void</span>  <span class="hljs-title">main</span><span class="hljs-params">()</span>  </span><span class="hljs-function"> </span>&#123;   <span class="hljs-keyword">char</span>  a  =  <span class="hljs-number">1</span>;   <span class="hljs-keyword">char</span>  c[]  =  <span class="hljs-string">"1234567890"</span>;   <span class="hljs-keyword">char</span>  *p  =<span class="hljs-string">"1234567890"</span>;   a  =  c[<span class="hljs-number">1</span>];   a  =  p[<span class="hljs-number">1</span>];   <span class="hljs-keyword">return</span>;   &#125;    对应的汇编代码   <span class="hljs-number">10</span>:  a  =  c[<span class="hljs-number">1</span>];   <span class="hljs-number">00401067</span>  <span class="hljs-number">8</span>A  <span class="hljs-number">4</span>D  F1  mov  cl,<span class="hljs-keyword">byte</span>  ptr  [ebp<span class="hljs-number">-0F</span>h]   <span class="hljs-number">0040106</span>A  <span class="hljs-number">88</span>  <span class="hljs-number">4</span>D  FC  mov  <span class="hljs-keyword">byte</span>  ptr  [ebp<span class="hljs-number">-4</span>],cl   <span class="hljs-number">11</span>:  a  =  p[<span class="hljs-number">1</span>];   <span class="hljs-number">0040106</span>D  <span class="hljs-number">8B</span>  <span class="hljs-number">55</span>  EC  mov  edx,dword  ptr  [ebp<span class="hljs-number">-14</span>h]   <span class="hljs-number">00401070</span>  <span class="hljs-number">8</span>A  <span class="hljs-number">42</span>  <span class="hljs-number">01</span>  mov  al,<span class="hljs-keyword">byte</span>  ptr  [edx+<span class="hljs-number">1</span>]   <span class="hljs-number">00401073</span>  <span class="hljs-number">88</span>  <span class="hljs-number">45</span>  FC  mov  <span class="hljs-keyword">byte</span>  ptr  [ebp<span class="hljs-number">-4</span>],al</code></pre><p>第一种在读取时直接就把字符串中的元素读到寄存器cl中，而第二种则要先把指针值读到<br />edx中，再根据edx读取字符，显然慢了。</p><h3 id="27-小结"><a class="markdownIt-Anchor" href="#27-小结"></a> 2.7  小结：</h3><p>堆和栈的区别可以用如下的比喻来看出：<br />使用栈就象我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就<br />走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自<br />由度小。<br />使用堆就象是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由<br />度大。  (经典！)</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>计算机基础</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Airbnb Clone with React</title>
+    <link href="/2020/08/09/Airbnb-Clone-with-React/"/>
+    <url>/2020/08/09/Airbnb-Clone-with-React/</url>
+    
+    <content type="html"><![CDATA[<p>本文是根据Ben Awad的React教学视频逐步学习制作而成的，旨在记录自己的学习过程和心得，将陆续更新进展。</p><ul><li>安装环境为Windows 10</li><li>Postgre 12</li><li>redis</li><li>Typescript</li></ul><h2 id="遇到的问题"><a class="markdownIt-Anchor" href="#遇到的问题"></a> 遇到的问题</h2><ul><li>Ben Awad的教程的环境为Mac，package.json的scripts配置与Windows不太一样</li></ul><pre><code class="hljs json">"scripts": &#123;    "start": "set NODE_ENV=development&amp;&amp;nodemon --exec ts-node src/index.ts",    "test": "set NODE_ENV=test&amp;&amp;jest --watch",    "gen-schema-types": "ts-node src/scripts/createTypes.ts"  &#125;,</code></pre><ul><li>教程为18年的，现在如果安装的PostgreSQL的版本较高的话，得选用新的TypeORM</li></ul><pre><code class="hljs json">"typeorm": "0.2.25",</code></pre><ul><li>PostgreSQL 第一次安装没有带数据库，重新安装一次</li><li>yarn start的时候提示Server内的package.json里的jest版本过旧，修改package.json里的版本重新install即可</li><li>根据教程安装后的web app 里面没有 tsconfig.json, 即没有 typescript</li><li>教程使用的antd版本为3.6.2，不是现有版本4，组件用法与现在的用法不太一致，修改package.json里的版本重新安装即可</li></ul><h2 id="postgresql-的安装"><a class="markdownIt-Anchor" href="#postgresql-的安装"></a> PostgreSQL 的安装</h2><p><a href="https://ken.io/note/centos7-postgresql12-install-and-configuration" target="_blank" rel="noopener">https://ken.io/note/centos7-postgresql12-install-and-configuration</a></p><h2 id="redis的安装和启动"><a class="markdownIt-Anchor" href="#redis的安装和启动"></a> Redis的安装和启动</h2><p>在GitHub上下载Redis.msi 直接安装</p><p>启动的话需要在Redis安装目录下，启动CMD</p><pre><code class="hljs css"><span class="hljs-selector-tag">redis-server</span><span class="hljs-selector-class">.exe</span> <span class="hljs-selector-tag">redis-windos</span><span class="hljs-selector-class">.conf</span></code></pre><p>如果先前安装的时候有勾选服务的选项，就可以直接关闭小黑窗了。</p><p>可以在CMD里执行redis-cli看redis服务是否在运行。</p><h2 id="开始react"><a class="markdownIt-Anchor" href="#开始react"></a> 开始React</h2><h3 id="安装react-cli"><a class="markdownIt-Anchor" href="#安装react-cli"></a> 安装React Cli</h3><pre><code class="hljs sql">npm -g <span class="hljs-keyword">install</span> <span class="hljs-keyword">create</span>-react-app</code></pre><p>然后选择合适的文件夹，在CMD里运行</p><pre><code class="hljs dsconfig"><span class="hljs-built_in">create-react-app</span> <span class="hljs-built_in">--scripts-version=react-scripts-ts</span><span class="hljs-built_in">cd</span> <span class="hljs-string">my-app/</span><span class="hljs-string">npm </span><span class="hljs-string">start</span></code></pre><p>上述是官方的教程，这样就有了React的环境，但是这个教程有个问题</p><p>使用这个方法创建的app里面并没有 tsconfig.json，也就是typescript的项目描述文件</p><p>在网上稍加搜索，看到了这样的操作</p><ol><li>重新创建项目</li></ol><pre><code class="hljs dsconfig"><span class="hljs-string">npm </span><span class="hljs-string">uninstall </span>-g <span class="hljs-built_in">create-react-app</span> // 卸载通过<span class="hljs-string">npm </span><span class="hljs-string">install </span>-g <span class="hljs-built_in">create-react-app</span> 安装的<span class="hljs-string">app</span><span class="hljs-string">npx </span><span class="hljs-built_in">create-react-app</span> <span class="hljs-string">my-app </span><span class="hljs-built_in">--typescript</span></code></pre><ol start="2"><li>手动配置添加typescript</li></ol><p><a href="https://github.com/lizhongzhen11/dailyGain/issues/36" target="_blank" rel="noopener">一个Github的issue</a>这个链接提及到如何配置</p><h3 id="配置apollo"><a class="markdownIt-Anchor" href="#配置apollo"></a> 配置Apollo</h3><p>使用GraphQL</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>React</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Git 使用方法小总结</title>
+    <link href="/2020/07/06/%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86Git-Clone/"/>
+    <url>/2020/07/06/%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86Git-Clone/</url>
+    
+    <content type="html"><![CDATA[<p>Github由于DNS污染的原因，经常clone的速度不到10 kb/s，难以忍受。有时候要设置Git Clone的代理，又得上网搜索一番，这里就简单记录一下设置代理的过程，省去自己搜索的过程。</p><h2 id="使用代理"><a class="markdownIt-Anchor" href="#使用代理"></a> 使用代理</h2><p>首先得保证你有梯子能够正常访问Google，这样才可以配置Git通过代理访问，一般来说v2ray的全局模式是对git clone没有用的，git 命令并不走全局代理，需要额外在git config中配置</p><pre><code class="hljs verilog"># 让所有git clone命令走代理# socks5协议，<span class="hljs-number">1080</span>端口修改成自己的本地代理端口git <span class="hljs-keyword">config</span> --<span class="hljs-keyword">global</span> http<span class="hljs-variable">.proxy</span> socks5:<span class="hljs-comment">//127.0.0.1:1080</span>git <span class="hljs-keyword">config</span> --<span class="hljs-keyword">global</span> https<span class="hljs-variable">.proxy</span> socks5:<span class="hljs-comment">//127.0.0.1:1080</span># http协议，<span class="hljs-number">1081</span>端口修改成自己的本地代理端口git <span class="hljs-keyword">config</span> --<span class="hljs-keyword">global</span> http<span class="hljs-variable">.proxy</span> http:<span class="hljs-comment">//127.0.0.1:1081</span>git <span class="hljs-keyword">config</span> --<span class="hljs-keyword">global</span> https<span class="hljs-variable">.proxy</span> https:<span class="hljs-comment">//127.0.0.1:1081</span></code></pre><p>以上配置会使得所有git命令走代理，包括国内的git仓库，有可能拖慢国内Git命令，甚至局域网内的操作。</p><p>因此建议仅针对Github进行配置，让Github走代理，不影响其他仓库的操作。</p><pre><code class="hljs jboss-cli"><span class="hljs-comment"># socks5协议，1080端口修改成自己的本地代理端口</span>git config <span class="hljs-params">--global</span> http.https:<span class="hljs-string">//github.com.proxy</span> socks5:<span class="hljs-string">//127.0.0.1</span><span class="hljs-function">:1080</span>git config <span class="hljs-params">--global</span> https.https:<span class="hljs-string">//github.com.proxy</span> socks5:<span class="hljs-string">//127.0.0.1</span><span class="hljs-function">:1080</span><span class="hljs-comment"># http协议，1081端口修改成自己的本地代理端口</span>git config <span class="hljs-params">--global</span> http.https:<span class="hljs-string">//github.com.proxy</span> https:<span class="hljs-string">//127.0.0.1</span><span class="hljs-function">:1081</span>git config <span class="hljs-params">--global</span> https.https:<span class="hljs-string">//github.com.proxy</span> https:<span class="hljs-string">//127.0.0.1</span><span class="hljs-function">:1081</span></code></pre><p>其他Git配置命令</p><pre><code class="hljs routeros"><span class="hljs-comment"># 查看所有配置</span>git<span class="hljs-built_in"> config </span>-l<span class="hljs-comment"># reset 代理设置</span>git<span class="hljs-built_in"> config </span>--global --unset http.proxygit<span class="hljs-built_in"> config </span>--global --unset https.proxy</code></pre><h2 id="git分支合并"><a class="markdownIt-Anchor" href="#git分支合并"></a> Git分支合并</h2><pre><code class="hljs properties"><span class="hljs-attr">git</span> <span class="hljs-string">checkout 你的分支</span><span class="hljs-attr">git</span> <span class="hljs-string">merge 想要合并的分支</span></code></pre>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Git</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Ubuntu16.04 libLAS配置</title>
+    <link href="/2020/05/24/Ubuntu16-04-Liblas%E9%85%8D%E7%BD%AE/"/>
+    <url>/2020/05/24/Ubuntu16-04-Liblas%E9%85%8D%E7%BD%AE/</url>
+    
+    <content type="html"><![CDATA[<p>Ubuntu16.04这个版本虽然教程多，但是网上大多数的教程都过于老旧，在这里记录一下我的配置libLAS的过程。</p><h2 id="需要安装的库"><a class="markdownIt-Anchor" href="#需要安装的库"></a> 需要安装的库</h2><p>这里为我设备上还需要安装的库，不一定都适用</p><ul><li><p>CMake</p></li><li><p>Boost 1.38.0及以上</p><p>apt安装即可</p></li></ul><pre><code class="hljs Ubuntu">sudo apt-get install libboost-all-dev</code></pre><ul><li><p>Geotiff</p><p>apt安装</p></li></ul><pre><code class="hljs Ubuntu">sudo apt-get install libgeotiff-dev</code></pre><h2 id="liblas"><a class="markdownIt-Anchor" href="#liblas"></a> libLAS</h2><p>下载地址：<a href="https://liblas.org/download.html" target="_blank" rel="noopener">libLAS</a></p><h3 id="解压并安装"><a class="markdownIt-Anchor" href="#解压并安装"></a> 解压并安装</h3><pre><code class="hljs Ubuntu">tar -zxvf libLAS-1.8.1-src.tar.bz2cd liblasmkdir makefilescmake ..makemake install&#x2F;&#x2F;&#x2F; 可能需要root权限sudo &#x2F;sbin&#x2F;ldconfig</code></pre><h3 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h3><pre><code class="hljs gams"><span class="hljs-function"><span class="hljs-title">lasinfo</span></span> ..test/data/TO_core_last_clip.las</code></pre><p>有输出点云即安装完成</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Ubuntu</tag>
+      
+      <tag>libLAS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Ubuntu16.04 双系统双硬盘安装</title>
+    <link href="/2020/05/23/Ubuntu16-04-%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%8F%8C%E7%A1%AC%E7%9B%98%E5%AE%89%E8%A3%85/"/>
+    <url>/2020/05/23/Ubuntu16-04-%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%8F%8C%E7%A1%AC%E7%9B%98%E5%AE%89%E8%A3%85/</url>
+    
+    <content type="html"><![CDATA[<p>在网络上各种过时教程中摸索出来的成功安装Ubuntu16.04的方法，为了以防自己忘了怎么装双系统，又瞎Google百度CSDN，一顿操作之后还得按电源键重启，还是记录一下安装过程吧。</p><p>安装的机型为2018款LG Gram14，没有独立显卡</p><h2 id="准备工作"><a class="markdownIt-Anchor" href="#准备工作"></a> 准备工作</h2><ul><li><a href="https://rufus.ie/" target="_blank" rel="noopener">Rufus</a> 用于制作Ubuntu的启动盘</li><li><a href="https://releases.ubuntu.com/" target="_blank" rel="noopener">Ubuntu16.04镜像</a></li><li>一个容量大于4GB的U盘</li><li>磁盘管理中将按照自己所需，选中还有空余空间的卷，压缩卷，自己分配合适空间，注意不要格式化新的卷。</li><li>Windows电源设置中关闭快速启动</li></ul><h2 id="制作ubuntu启动盘"><a class="markdownIt-Anchor" href="#制作ubuntu启动盘"></a> 制作Ubuntu启动盘</h2><p>Rufus 是一个可以帮助格式化和创建可引导USB闪存盘的工具，比如 USB 随身碟，记忆棒等等。</p><p>在如下场景中会非常有用：</p><ul><li>你需要把一些可引导的ISO格式的镜像（Windows，Linux，UEFI等）创建成USB安装盘的时候</li><li>你需要使用一个还没有安装操作系统的设备的时候</li><li>你需要从DOS系统刷写BIOS或者其他固件的时候</li><li>你需要运行一个非常底层的工具的时候</li></ul><p>这里，我们就需要将下载下来的Ubuntu镜像通过Rufus创建USB安装盘。</p><p><img src="/img/Rufus.png" srcset="/img/loading.gif" alt="Rufus" /></p><p>点击选择来选择需要使用的iso镜像文件，分区类型选择GPT使启动盘可以被UEFI识别，其余默认或者如图这样设置即可。</p><p>插入安装盘重启</p><h2 id="bios设置"><a class="markdownIt-Anchor" href="#bios设置"></a> Bios设置</h2><pre><code>笔者的Gram为开机时出现LG的Logo时，按下F2进入Bios</code></pre><ol><li><p>关闭Secure boot</p></li><li><p>开启/选用UEFI模式</p></li><li><p>Boot启动优先顺序，将U盘的优先级置于最高</p><p>（开机时Gram按F10可选择启动项）</p></li><li><p>F10保存配置并退出</p></li></ol><p>如果没有大碍，这里再次重启时应该会载入启动盘的Ubuntu安装引导界面。</p><h2 id="ubuntu的安装"><a class="markdownIt-Anchor" href="#ubuntu的安装"></a> Ubuntu的安装</h2><p>笔者这里是双硬盘，一块硬盘安装Windows 10，一块硬盘安装Ubuntu16.04。</p><p>这里的界面应该识别出Windows Boot Manager</p><ol><li>进入安装界面时，不要点有关联网的选项，不然可能拖慢安装速度</li><li>到分区的时候，选中自己分配出来的空闲的卷，添加swap, / ,/home分区，均为逻辑分区（好像主分区也问题不大），一般swap分区大小为内存的两倍（内存够大也可以不分swap），/分区类似Windows的C盘，大概分10-20GB.剩下的空间留给/home</li><li>启动引导程序选择Windows Boot Manager所在的分区</li><li>等待Ubuntu安装程序，泡杯卡布奇诺休息一下</li></ol><h2 id="尾声"><a class="markdownIt-Anchor" href="#尾声"></a> 尾声</h2><p>安装完之后重启应该是进入到Ubuntu的启动项可选择Ubuntu或者Windows Boot Manager，即进入Windows，到这里安装应该是完成了。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Ubuntu</tag>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Hello Hexo</title>
+    <link href="/2020/05/03/hello-hexo/"/>
+    <url>/2020/05/03/hello-hexo/</url>
+    
+    <content type="html"><![CDATA[<p>这是我部署在VPS上的基于Hexo框架+Fluid主题的个人博客。原本想着自己建个简单的个人博客，用什么框架好呢，看到知乎上有人推荐Hexo，以及Hexo的Fluid这个Material Design的主题很对我的胃口，就决定是它了！</p><p>Hexo是使用Git来更新页面和发表文章的静态页面，本身很适合用Github Pages来作为载体，但是我觉得Github Pages连接方面不是很稳定，而且手头刚好有闲置的VPS和域名，就想把博客移植至到VPS上，过程也很简单，相当于在VPS上建了个Git私有库。</p><p>作为第一篇博客，就在这里记录一下建站的心路历程吧！</p><h2 id="搭建步骤"><a class="markdownIt-Anchor" href="#搭建步骤"></a> 搭建步骤</h2><ul><li>Git</li><li>Node.js</li><li>Hexo</li><li>Fluid主题</li><li>Gulp压缩静态资源</li><li>VPS环境构建:<ul><li>Git私有库</li><li>创建git用户并设置用户的SSH</li><li>Nginx</li></ul></li></ul><h2 id="参考链接"><a class="markdownIt-Anchor" href="#参考链接"></a> 参考链接</h2><p>网上关于Hexo的搭建和部署教程已经很多了，这里就放一些自己搭建时参考的教程。</p><ul><li><p><a href="https://zhuanlan.zhihu.com/p/82437065" target="_blank" rel="noopener">环境搭建</a></p></li><li><p><a href="https://fluid-dev.github.io/hexo-fluid-docs/" target="_blank" rel="noopener">Fluid主题</a></p></li><li><p><a href="https://www.voidking.com/dev-hexo-gulp/" target="_blank" rel="noopener">Gulp压缩静态资源</a></p></li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+      <tag>Fluid</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
