@@ -7,7 +7,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
   <link rel="icon" type="image/png" href="/img/favicon.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
@@ -47,7 +47,7 @@
 
 
   <script  src="/js/utils.js" ></script>
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -207,32 +207,32 @@
               <p>Github由于DNS污染的原因，经常clone的速度不到10 kb/s，难以忍受。有时候要设置Git Clone的代理，又得上网搜索一番，这里就简单记录一下设置代理的过程，省去自己搜索的过程。</p>
 <h2 id="使用代理"><a class="markdownIt-Anchor" href="#使用代理"></a> 使用代理</h2>
 <p>首先得保证你有梯子能够正常访问Google，这样才可以配置Git通过代理访问，一般来说v2ray的全局模式是对git clone没有用的，git 命令并不走全局代理，需要额外在git config中配置</p>
-<pre><code class="hljs verilog"># 让所有git clone命令走代理
-# socks5协议，<span class="hljs-number">1080</span>端口修改成自己的本地代理端口
-git <span class="hljs-keyword">config</span> --<span class="hljs-keyword">global</span> http<span class="hljs-variable">.proxy</span> socks5:<span class="hljs-comment">//127.0.0.1:1080</span>
-git <span class="hljs-keyword">config</span> --<span class="hljs-keyword">global</span> https<span class="hljs-variable">.proxy</span> socks5:<span class="hljs-comment">//127.0.0.1:1080</span>
-
-# http协议，<span class="hljs-number">1081</span>端口修改成自己的本地代理端口
-git <span class="hljs-keyword">config</span> --<span class="hljs-keyword">global</span> http<span class="hljs-variable">.proxy</span> http:<span class="hljs-comment">//127.0.0.1:1081</span>
-git <span class="hljs-keyword">config</span> --<span class="hljs-keyword">global</span> https<span class="hljs-variable">.proxy</span> https:<span class="hljs-comment">//127.0.0.1:1081</span></code></pre>
-<p>以上配置会使得所有git命令走代理，包括国内的git仓库，有可能拖慢国内Git命令，甚至局域网内的操作。</p>
-<p>因此建议仅针对Github进行配置，让Github走代理，不影响其他仓库的操作。</p>
-<pre><code class="hljs jboss-cli"><span class="hljs-comment"># socks5协议，1080端口修改成自己的本地代理端口</span>
-git config <span class="hljs-params">--global</span> http.https:<span class="hljs-string">//github.com.proxy</span> socks5:<span class="hljs-string">//127.0.0.1</span><span class="hljs-function">:1080</span>
-git config <span class="hljs-params">--global</span> https.https:<span class="hljs-string">//github.com.proxy</span> socks5:<span class="hljs-string">//127.0.0.1</span><span class="hljs-function">:1080</span>
+<pre><code class="hljs julia"><span class="hljs-comment"># 让所有git clone命令走代理</span>
+<span class="hljs-comment"># socks5协议，1080端口修改成自己的本地代理端口</span>
+git config --<span class="hljs-keyword">global</span> http.proxy <span class="hljs-string">``</span>socks5://<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">1080</span><span class="hljs-string">``</span> 
+git config --<span class="hljs-keyword">global</span> https.proxy <span class="hljs-string">``</span>socks5://<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">1080</span><span class="hljs-string">``</span> 
 
 <span class="hljs-comment"># http协议，1081端口修改成自己的本地代理端口</span>
-git config <span class="hljs-params">--global</span> http.https:<span class="hljs-string">//github.com.proxy</span> https:<span class="hljs-string">//127.0.0.1</span><span class="hljs-function">:1081</span>
-git config <span class="hljs-params">--global</span> https.https:<span class="hljs-string">//github.com.proxy</span> https:<span class="hljs-string">//127.0.0.1</span><span class="hljs-function">:1081</span></code></pre>
+git config --<span class="hljs-keyword">global</span> http.proxy <span class="hljs-string">``</span>http://<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">1081</span> <span class="hljs-string">``</span>
+git config --<span class="hljs-keyword">global</span> https.proxy  <span class="hljs-string">``</span>https://<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">1081</span> <span class="hljs-string">``</span></code></pre>
+<p>以上配置会使得所有git命令走代理，包括国内的git仓库，有可能拖慢国内Git命令，甚至局域网内的操作。</p>
+<p>因此建议仅针对Github进行配置，让Github走代理，不影响其他仓库的操作。</p>
+<pre><code class="hljs awk"><span class="hljs-comment"># socks5协议，1080端口修改成自己的本地代理端口</span>
+git config --global http.https:<span class="hljs-regexp">//gi</span>thub.com.proxy socks5:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">1080</span> 
+git config --global https.https:<span class="hljs-regexp">//gi</span>thub.com.proxy socks5:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">1080</span> 
+
+<span class="hljs-comment"># http协议，1081端口修改成自己的本地代理端口</span>
+git config --global http.https:<span class="hljs-regexp">//gi</span>thub.com.proxy ``https:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">1081</span>`` 
+git config --global https.https:<span class="hljs-regexp">//gi</span>thub.com.proxy ``https:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">1081</span>``</code></pre>
 <p>其他Git配置命令</p>
-<pre><code class="hljs routeros"><span class="hljs-comment"># 查看所有配置</span>
-git<span class="hljs-built_in"> config </span>-l
+<pre><code class="hljs tcl"><span class="hljs-comment"># 查看所有配置</span>
+git config -l
 <span class="hljs-comment"># reset 代理设置</span>
-git<span class="hljs-built_in"> config </span>--global --unset http.proxy
-git<span class="hljs-built_in"> config </span>--global --unset https.proxy</code></pre>
+git config --<span class="hljs-keyword">global</span> --<span class="hljs-keyword">unset</span> <span class="hljs-keyword">http</span>.proxy
+git config --<span class="hljs-keyword">global</span> --<span class="hljs-keyword">unset</span> https.proxy</code></pre>
 <h2 id="git分支合并"><a class="markdownIt-Anchor" href="#git分支合并"></a> Git分支合并</h2>
-<pre><code class="hljs properties"><span class="hljs-attr">git</span> <span class="hljs-string">checkout 你的分支</span>
-<span class="hljs-attr">git</span> <span class="hljs-string">merge 想要合并的分支</span></code></pre>
+<pre><code class="hljs cos">git checkout 你的分支
+git <span class="hljs-keyword">merge</span> 想要合并的分支</code></pre>
 
             </article>
             <hr>
@@ -248,6 +248,8 @@ git<span class="hljs-built_in"> config </span>--global --unset https.proxy</code
                   </div>
                 
               </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
               
                 <div class="post-prevnext row">
@@ -287,6 +289,8 @@ git<span class="hljs-built_in"> config </span>--global --unset https.proxy</code
       s.defer = false
       s.setAttribute('repo', 'iniFeng/commit-utterances');
       s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
       
       s.setAttribute('theme', 'github-light');
       s.setAttribute('crossorigin', 'anonymous');

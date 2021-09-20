@@ -7,7 +7,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
   <link rel="icon" type="image/png" href="/img/favicon.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
@@ -47,7 +47,7 @@
 
 
   <script  src="/js/utils.js" ></script>
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -207,7 +207,7 @@
               <p>用惯了语言自带的 sort，还没有自己系统归纳各种排序，硬要写排序的话估计只能想出个冒泡…</p>
 <p>趁现在赶紧补一补.。</p>
 <p>既然想入前端的坑，就用  JS 来试着写写各种排序吧！</p>
-<p>》》<a href="https://leetcode-cn.com/problems/sort-an-array/" target="_blank" rel="noopener">在LeetCode中尝试</a> 《《</p>
+<p>》》<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/sort-an-array/">在LeetCode中尝试</a> 《《</p>
 <h2 id="冒泡排序"><a class="markdownIt-Anchor" href="#冒泡排序"></a> 冒泡排序</h2>
 <p>冒泡排序只在相邻元素大小不符合要求时才调换他们位置，不会改变相同元素之间的相对顺序，所以它是稳定的排序算法。</p>
 <ol>
@@ -262,7 +262,7 @@
 <span class="hljs-comment"> * <span class="hljs-doctag">@return <span class="hljs-type">&#123;number[]&#125;</span></span></span>
 <span class="hljs-comment"> */</span>
 <span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;nums.length<span class="hljs-number">-1</span>; i++) &#123;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;nums.length-<span class="hljs-number">1</span>; i++) &#123;
         <span class="hljs-keyword">let</span> sel=nums[i];  <span class="hljs-comment">//选中的最小值</span>
         <span class="hljs-keyword">let</span> n = i;		  <span class="hljs-comment">//最小值的索引</span>
         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j=i+<span class="hljs-number">1</span>; j&lt;nums.length; j++) &#123;
@@ -303,7 +303,7 @@
 <span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;
     <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i&lt;nums.length; i++) &#123;
        <span class="hljs-keyword">let</span> temp = nums[i];
-       <span class="hljs-keyword">let</span> j = i<span class="hljs-number">-1</span>;
+       <span class="hljs-keyword">let</span> j = i-<span class="hljs-number">1</span>;
        <span class="hljs-keyword">for</span>(j; j&gt;=<span class="hljs-number">0</span>; j--) &#123;
            <span class="hljs-keyword">if</span>(nums[j]&lt;=temp) <span class="hljs-keyword">break</span>; <span class="hljs-comment">// 找到插入的位置时break;</span>
            nums[j+<span class="hljs-number">1</span>] = nums[j];		<span class="hljs-comment">// 将值比temp大的元素后移一位</span>
@@ -340,7 +340,7 @@
 <span class="hljs-comment"> */</span>
 <span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;
     <span class="hljs-keyword">if</span>(nums.length &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> nums;
-    quickSort(nums,<span class="hljs-number">0</span>,nums.length<span class="hljs-number">-1</span>);
+    quickSort(nums,<span class="hljs-number">0</span>,nums.length-<span class="hljs-number">1</span>);
     <span class="hljs-keyword">return</span> nums;
 &#125;;
 <span class="hljs-comment">// 递归</span>
@@ -348,7 +348,7 @@
     <span class="hljs-keyword">if</span>(left&gt;=right) <span class="hljs-keyword">return</span>;
     <span class="hljs-keyword">let</span> partitionIndex = partition(nums,left, right);
     quickSort(nums,partitionIndex+<span class="hljs-number">1</span>, right);
-    quickSort(nums,left, partitionIndex<span class="hljs-number">-1</span>);
+    quickSort(nums,left, partitionIndex-<span class="hljs-number">1</span>);
     <span class="hljs-keyword">return</span> nums;
 &#125;
 <span class="hljs-comment">// 分区</span>
@@ -401,6 +401,8 @@
                 
               </div>
               
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
               
                 <div class="post-prevnext row">
                   <div class="post-prev col-6">
@@ -439,6 +441,8 @@
       s.defer = false
       s.setAttribute('repo', 'iniFeng/commit-utterances');
       s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
       
       s.setAttribute('theme', 'github-light');
       s.setAttribute('crossorigin', 'anonymous');

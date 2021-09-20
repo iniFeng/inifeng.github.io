@@ -7,7 +7,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
   <link rel="icon" type="image/png" href="/img/favicon.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
@@ -47,7 +47,7 @@
 
 
   <script  src="/js/utils.js" ></script>
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      521 字
+      539 字
     </span>
   
 
@@ -173,7 +173,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6
+      7
        分钟
     </span>
   
@@ -215,15 +215,15 @@
 <ul>
 <li>Ben Awad的教程的环境为Mac，package.json的scripts配置与Windows不太一样</li>
 </ul>
-<pre><code class="hljs json">"scripts": &#123;
-    "start": "set NODE_ENV=development&amp;&amp;nodemon --exec ts-node src/index.ts",
-    "test": "set NODE_ENV=test&amp;&amp;jest --watch",
-    "gen-schema-types": "ts-node src/scripts/createTypes.ts"
+<pre><code class="hljs json"><span class="hljs-string">&quot;scripts&quot;</span>: &#123;
+    <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;set NODE_ENV=development&amp;&amp;nodemon --exec ts-node src/index.ts&quot;</span>,
+    <span class="hljs-attr">&quot;test&quot;</span>: <span class="hljs-string">&quot;set NODE_ENV=test&amp;&amp;jest --watch&quot;</span>,
+    <span class="hljs-attr">&quot;gen-schema-types&quot;</span>: <span class="hljs-string">&quot;ts-node src/scripts/createTypes.ts&quot;</span>
   &#125;,</code></pre>
 <ul>
 <li>教程为18年的，现在如果安装的PostgreSQL的版本较高的话，得选用新的TypeORM</li>
 </ul>
-<pre><code class="hljs json">"typeorm": "0.2.25",</code></pre>
+<pre><code class="hljs json"><span class="hljs-string">&quot;typeorm&quot;</span>: <span class="hljs-string">&quot;0.2.25&quot;</span>,</code></pre>
 <ul>
 <li>PostgreSQL 第一次安装没有带数据库，重新安装一次</li>
 <li>yarn start的时候提示Server内的package.json里的jest版本过旧，修改package.json里的版本重新install即可</li>
@@ -231,32 +231,32 @@
 <li>教程使用的antd版本为3.6.2，不是现有版本4，组件用法与现在的用法不太一致，修改package.json里的版本重新安装即可</li>
 </ul>
 <h2 id="postgresql-的安装"><a class="markdownIt-Anchor" href="#postgresql-的安装"></a> PostgreSQL 的安装</h2>
-<p><a href="https://ken.io/note/centos7-postgresql12-install-and-configuration" target="_blank" rel="noopener">https://ken.io/note/centos7-postgresql12-install-and-configuration</a></p>
+<p><a target="_blank" rel="noopener" href="https://ken.io/note/centos7-postgresql12-install-and-configuration">https://ken.io/note/centos7-postgresql12-install-and-configuration</a></p>
 <h2 id="redis的安装和启动"><a class="markdownIt-Anchor" href="#redis的安装和启动"></a> Redis的安装和启动</h2>
 <p>在GitHub上下载Redis.msi 直接安装</p>
 <p>启动的话需要在Redis安装目录下，启动CMD</p>
-<pre><code class="hljs css"><span class="hljs-selector-tag">redis-server</span><span class="hljs-selector-class">.exe</span> <span class="hljs-selector-tag">redis-windos</span><span class="hljs-selector-class">.conf</span></code></pre>
+<pre><code class="hljs vim">redis-server.<span class="hljs-keyword">exe</span> redis-windos.<span class="hljs-keyword">conf</span></code></pre>
 <p>如果先前安装的时候有勾选服务的选项，就可以直接关闭小黑窗了。</p>
 <p>可以在CMD里执行redis-cli看redis服务是否在运行。</p>
 <h2 id="开始react"><a class="markdownIt-Anchor" href="#开始react"></a> 开始React</h2>
 <h3 id="安装react-cli"><a class="markdownIt-Anchor" href="#安装react-cli"></a> 安装React Cli</h3>
-<pre><code class="hljs sql">npm -g <span class="hljs-keyword">install</span> <span class="hljs-keyword">create</span>-react-app</code></pre>
+<pre><code class="hljs cmake">npm -g <span class="hljs-keyword">install</span> create-react-app</code></pre>
 <p>然后选择合适的文件夹，在CMD里运行</p>
 <pre><code class="hljs dsconfig"><span class="hljs-built_in">create-react-app</span> <span class="hljs-built_in">--scripts-version=react-scripts-ts</span>
-<span class="hljs-built_in">cd</span> <span class="hljs-string">my-app/</span>
-<span class="hljs-string">npm </span><span class="hljs-string">start</span></code></pre>
+<span class="hljs-string">cd</span> <span class="hljs-string">my-app</span>/
+<span class="hljs-string">npm</span> <span class="hljs-string">start</span></code></pre>
 <p>上述是官方的教程，这样就有了React的环境，但是这个教程有个问题</p>
 <p>使用这个方法创建的app里面并没有 tsconfig.json，也就是typescript的项目描述文件</p>
 <p>在网上稍加搜索，看到了这样的操作</p>
 <ol>
 <li>重新创建项目</li>
 </ol>
-<pre><code class="hljs dsconfig"><span class="hljs-string">npm </span><span class="hljs-string">uninstall </span>-g <span class="hljs-built_in">create-react-app</span> // 卸载通过<span class="hljs-string">npm </span><span class="hljs-string">install </span>-g <span class="hljs-built_in">create-react-app</span> 安装的<span class="hljs-string">app</span>
-<span class="hljs-string">npx </span><span class="hljs-built_in">create-react-app</span> <span class="hljs-string">my-app </span><span class="hljs-built_in">--typescript</span></code></pre>
+<pre><code class="hljs dsconfig"><span class="hljs-string">npm</span> <span class="hljs-string">uninstall</span> -<span class="hljs-string">g</span> <span class="hljs-built_in">create-react-app</span> // 卸载通过<span class="hljs-string">npm</span> <span class="hljs-string">install</span> -<span class="hljs-string">g</span> <span class="hljs-built_in">create-react-app</span> 安装的<span class="hljs-string">app</span>
+<span class="hljs-string">npx</span> <span class="hljs-built_in">create-react-app</span> <span class="hljs-string">my-app</span> <span class="hljs-built_in">--typescript</span></code></pre>
 <ol start="2">
 <li>手动配置添加typescript</li>
 </ol>
-<p><a href="https://github.com/lizhongzhen11/dailyGain/issues/36" target="_blank" rel="noopener">一个Github的issue</a>这个链接提及到如何配置</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/lizhongzhen11/dailyGain/issues/36">一个Github的issue</a>这个链接提及到如何配置</p>
 <h3 id="配置apollo"><a class="markdownIt-Anchor" href="#配置apollo"></a> 配置Apollo</h3>
 <p>使用GraphQL</p>
 
@@ -274,6 +274,8 @@
                   </div>
                 
               </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
               
                 <div class="post-prevnext row">
@@ -313,6 +315,8 @@
       s.defer = false
       s.setAttribute('repo', 'iniFeng/commit-utterances');
       s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
       
       s.setAttribute('theme', 'github-light');
       s.setAttribute('crossorigin', 'anonymous');
