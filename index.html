@@ -536,6 +536,29 @@ Hexo是使用Git来更新页面和发表文章的静态页面，本身很适合�
   
 
   
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
+<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
+<script type="text/javascript">
+  var oldLoadAp = window.onload;
+  window.onload = function () {
+    oldLoadAp && oldLoadAp();
+
+    new APlayer({
+      container: document.getElementById('aplayer'),
+      fixed: true,
+      autoplay: 'false' === 'true',
+      loop: 'all',
+      order: 'random',
+      theme: '#b7daff',
+      preload: 'none',
+      audio: [{"name":"DAYBREAK FRONTLINE","artist":"めありー Orangestar","url":"http://music.163.com/song/media/outer/url?id=557579433","cover":"/img/cover-daybreakfrontline.jpg"},{"name":"アオイハルカゼ","artist":"H△G","url":"http://music.163.com/song/media/outer/url?id=536623585","cover":"/img/cover-アオイハルカゼ.jpg"}]
+    });
+  }
+</script>
+
+  
 
   
 
