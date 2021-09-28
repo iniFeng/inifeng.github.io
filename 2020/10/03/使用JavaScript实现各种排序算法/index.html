@@ -1,44 +1,62 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-
+<html lang="zh-CN" data-default-color-scheme=auto>
 
 
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" type="image/png" href="/img/favicon.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
   <meta name="description" content="">
   <meta name="author" content="iniFeng">
   <meta name="keywords" content="">
+  <meta name="description" content="用惯了语言自带的 sort，还没有自己系统归纳各种排序，硬要写排序的话估计只能想出个冒泡… 趁现在赶紧补一补.。 既然想入前端的坑，就用  JS 来试着写写各种排序吧！ 》》在LeetCode中尝试 《《  冒泡排序 冒泡排序只在相邻元素大小不符合要求时才调换他们位置，不会改变相同元素之间的相对顺序，所以它是稳定的排序算法。  一般解法  123456789101112var sortArray">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用JavaScript实现各种排序算法">
+<meta property="og:url" content="https://inifeng.github.io/2020/10/03/%E4%BD%BF%E7%94%A8JavaScript%E5%AE%9E%E7%8E%B0%E5%90%84%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="iniFeng的茶馆">
+<meta property="og:description" content="用惯了语言自带的 sort，还没有自己系统归纳各种排序，硬要写排序的话估计只能想出个冒泡… 趁现在赶紧补一补.。 既然想入前端的坑，就用  JS 来试着写写各种排序吧！ 》》在LeetCode中尝试 《《  冒泡排序 冒泡排序只在相邻元素大小不符合要求时才调换他们位置，不会改变相同元素之间的相对顺序，所以它是稳定的排序算法。  一般解法  123456789101112var sortArray">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-03T14:36:19.000Z">
+<meta property="article:modified_time" content="2021-09-20T14:59:35.464Z">
+<meta property="article:author" content="iniFeng">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary_large_image">
+  
   <title>使用JavaScript实现各种排序算法 - iniFeng的茶馆</title>
 
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
 
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
   <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
   
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
   
 
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
   
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
 
 
 <link  rel="stylesheet" href="/css/main.css" />
@@ -46,7 +64,12 @@
 <!-- 自定义样式保持在最底部 -->
 
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"inifeng.github.io","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"},"tajs":null},"search_path":"/local-search.xml"};
+  </script>
   <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
@@ -54,8 +77,9 @@
   <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>iniFeng的茶馆</strong>&nbsp;</a>
+    <a class="navbar-brand" href="/">
+      <strong>iniFeng的茶馆</strong>
+    </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -129,8 +153,15 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
       </ul>
@@ -138,43 +169,43 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="banner" id="banner" parallax=true
          style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="使用JavaScript实现各种排序算法">
               
             </span>
 
             
-              
-  <div class="mt-3 post-meta">
-    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-10-03 22:36">
-      2020年10月3日 晚上
-    </time>
-  </div>
-
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-10-03 22:36" pubdate>
+        2020年10月3日 晚上
+      </time>
+    </span>
+  
+</div>
 
 <div class="mt-1">
   
-    
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      2.7k 字
     </span>
   
 
   
-    
     <span class="post-meta mr-2">
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14
-       分钟
+      8 分钟
     </span>
   
 
@@ -195,15 +226,17 @@
     
       
 
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
     <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="container nopadding-md" id="board-ctn">
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
-          <div class="post-content mx-auto" id="post">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">使用JavaScript实现各种排序算法</h1>
             
-            <article class="markdown-body">
+            <div class="markdown-body">
               <p>用惯了语言自带的 sort，还没有自己系统归纳各种排序，硬要写排序的话估计只能想出个冒泡…</p>
 <p>趁现在赶紧补一补.。</p>
 <p>既然想入前端的坑，就用  JS 来试着写写各种排序吧！</p>
@@ -213,29 +246,11 @@
 <ol>
 <li>一般解法</li>
 </ol>
-<pre><code class="hljs javascript"><span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;nums.length; i++) &#123;
-		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = i; j&lt;nums.length; j++) &#123;
-            <span class="hljs-keyword">if</span> (nums[i] &gt; nums[j]) &#123; <span class="hljs-comment">// 升序</span>
-                <span class="hljs-keyword">let</span> tmp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = tmp;
-            &#125;
-        &#125;
-    &#125;
-    <span class="hljs-keyword">return</span> nums;
-&#125;</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;nums.length; i++) &#123;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = i; j&lt;nums.length; j++) &#123;<br>            <span class="hljs-keyword">if</span> (nums[i] &gt; nums[j]) &#123; <span class="hljs-comment">// 升序</span><br>                <span class="hljs-keyword">let</span> tmp = nums[i];<br>                nums[i] = nums[j];<br>                nums[j] = tmp;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> nums;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ol start="2">
 <li>JS的解构赋值</li>
 </ol>
-<pre><code class="hljs javascript"><span class="hljs-keyword">var</span> sortArray =<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;
-	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;nums.length; i++) &#123;
-		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = i; j&lt;nums.length; j++) &#123;
-			[nums[i], nums[j]] = [nums[j], nums[i]];
-		&#125;
-	&#125;
-	<span class="hljs-keyword">return</span> nums;
-&#125;</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> sortArray =<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;nums.length; i++) &#123;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = i; j&lt;nums.length; j++) &#123;<br>			[nums[i], nums[j]] = [nums[j], nums[i]];<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> nums;<br>&#125;<br></code></pre></td></tr></table></figure>
 <table>
 <thead>
 <tr>
@@ -257,25 +272,7 @@
 <h2 id="选择排序"><a class="markdownIt-Anchor" href="#选择排序"></a> 选择排序</h2>
 <p>选择排序也是两层循环，内层循环每次执行一遍，挑出本次待排序的元素中最小/大的一个，存放在数组的排序后位置。</p>
 <p>选择排序每次交换的元素都有可能不是相邻的，因此它可能改变了相同值元素的相对位置。因此选择排序不稳定。</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">/**</span>
-<span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;number[]&#125;</span> <span class="hljs-variable">nums</span></span></span>
-<span class="hljs-comment"> * <span class="hljs-doctag">@return <span class="hljs-type">&#123;number[]&#125;</span></span></span>
-<span class="hljs-comment"> */</span>
-<span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;nums.length-<span class="hljs-number">1</span>; i++) &#123;
-        <span class="hljs-keyword">let</span> sel=nums[i];  <span class="hljs-comment">//选中的最小值</span>
-        <span class="hljs-keyword">let</span> n = i;		  <span class="hljs-comment">//最小值的索引</span>
-        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j=i+<span class="hljs-number">1</span>; j&lt;nums.length; j++) &#123;
-            <span class="hljs-keyword">if</span> (nums[j] &lt; sel) &#123;
-                sel = nums[j];
-                n = j;
-            &#125;
-        &#125;
-        nums[n] = nums[i];
-        nums[i] = sel;
-    &#125;
-    <span class="hljs-keyword">return</span> nums;
-&#125;;</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;number[]&#125;</span> <span class="hljs-variable">nums</span></span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return <span class="hljs-type">&#123;number[]&#125;</span></span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i&lt;nums.length-<span class="hljs-number">1</span>; i++) &#123;<br>        <span class="hljs-keyword">let</span> sel=nums[i];  <span class="hljs-comment">//选中的最小值</span><br>        <span class="hljs-keyword">let</span> n = i;		  <span class="hljs-comment">//最小值的索引</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j=i+<span class="hljs-number">1</span>; j&lt;nums.length; j++) &#123;<br>            <span class="hljs-keyword">if</span> (nums[j] &lt; sel) &#123;<br>                sel = nums[j];<br>                n = j;<br>            &#125;<br>        &#125;<br>        nums[n] = nums[i];<br>        nums[i] = sel;<br>    &#125;<br>    <span class="hljs-keyword">return</span> nums;<br>&#125;;	<br></code></pre></td></tr></table></figure>
 <table>
 <thead>
 <tr>
@@ -296,22 +293,7 @@
 </table>
 <h2 id="插入排序"><a class="markdownIt-Anchor" href="#插入排序"></a> 插入排序</h2>
 <p>插入排序将数组分成两个部分，前半部分为排序部分，后半部分为待插入的元素部分。插入排序不会影响相同值元素的相对位置，所以是稳定的排序。</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">/**</span>
-<span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;number[]&#125;</span> <span class="hljs-variable">nums</span></span></span>
-<span class="hljs-comment"> * <span class="hljs-doctag">@return <span class="hljs-type">&#123;number[]&#125;</span></span></span>
-<span class="hljs-comment"> */</span>
-<span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i&lt;nums.length; i++) &#123;
-       <span class="hljs-keyword">let</span> temp = nums[i];
-       <span class="hljs-keyword">let</span> j = i-<span class="hljs-number">1</span>;
-       <span class="hljs-keyword">for</span>(j; j&gt;=<span class="hljs-number">0</span>; j--) &#123;
-           <span class="hljs-keyword">if</span>(nums[j]&lt;=temp) <span class="hljs-keyword">break</span>; <span class="hljs-comment">// 找到插入的位置时break;</span>
-           nums[j+<span class="hljs-number">1</span>] = nums[j];		<span class="hljs-comment">// 将值比temp大的元素后移一位</span>
-       &#125;
-       nums[j+<span class="hljs-number">1</span>] = temp;			<span class="hljs-comment">// 完成插入操作</span>
-    &#125;
-    <span class="hljs-keyword">return</span> nums;
-&#125;;</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;number[]&#125;</span> <span class="hljs-variable">nums</span></span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return <span class="hljs-type">&#123;number[]&#125;</span></span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i&lt;nums.length; i++) &#123;<br>       <span class="hljs-keyword">let</span> temp = nums[i];<br>       <span class="hljs-keyword">let</span> j = i-<span class="hljs-number">1</span>;<br>       <span class="hljs-keyword">for</span>(j; j&gt;=<span class="hljs-number">0</span>; j--) &#123;<br>           <span class="hljs-keyword">if</span>(nums[j]&lt;=temp) <span class="hljs-keyword">break</span>; <span class="hljs-comment">// 找到插入的位置时break;</span><br>           nums[j+<span class="hljs-number">1</span>] = nums[j];		<span class="hljs-comment">// 将值比temp大的元素后移一位</span><br>       &#125;<br>       nums[j+<span class="hljs-number">1</span>] = temp;			<span class="hljs-comment">// 完成插入操作</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> nums;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <table>
 <thead>
 <tr>
@@ -334,39 +316,7 @@
 <p>希尔排序可以看作是一个冒泡排序或者插入排序的变形。希尔排序在每次排序的时候都把数组拆分成若干个序列，一个序列的相邻的元素索引相隔固定的距离 gap, 每一轮对这些序列进行冒泡或者插入排序，然后再缩小 gap 得到新的序列，一一排序，直到 gap 为1。</p>
 <h2 id="快速排序"><a class="markdownIt-Anchor" href="#快速排序"></a> 快速排序</h2>
 <p>快速排序借用了分治的思想，并基于冒泡排序做了改进，它由C.A.R. Hoare在1962年提出。它将数组拆分为两个子数组，其中一个子数组的所有元素都比另一个子数组的元素小，然后对这两个子数组再重复进行上述操作，直到数组不可拆分，排序完成。</p>
-<pre><code class="hljs javascript"><span class="hljs-comment">/**</span>
-<span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;number[]&#125;</span> <span class="hljs-variable">nums</span></span></span>
-<span class="hljs-comment"> * <span class="hljs-doctag">@return <span class="hljs-type">&#123;number[]&#125;</span></span></span>
-<span class="hljs-comment"> */</span>
-<span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;
-    <span class="hljs-keyword">if</span>(nums.length &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> nums;
-    quickSort(nums,<span class="hljs-number">0</span>,nums.length-<span class="hljs-number">1</span>);
-    <span class="hljs-keyword">return</span> nums;
-&#125;;
-<span class="hljs-comment">// 递归</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">quickSort</span>(<span class="hljs-params">nums, left, right</span>) </span>&#123;
-    <span class="hljs-keyword">if</span>(left&gt;=right) <span class="hljs-keyword">return</span>;
-    <span class="hljs-keyword">let</span> partitionIndex = partition(nums,left, right);
-    quickSort(nums,partitionIndex+<span class="hljs-number">1</span>, right);
-    quickSort(nums,left, partitionIndex-<span class="hljs-number">1</span>);
-    <span class="hljs-keyword">return</span> nums;
-&#125;
-<span class="hljs-comment">// 分区</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">partition</span>(<span class="hljs-params">nums, left, right</span>) </span>&#123;	
-    <span class="hljs-keyword">let</span> pivot = right; 		<span class="hljs-comment">//规定pivot为序列最右值</span>
-    <span class="hljs-keyword">let</span> leftIndex = left;	
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = left; i&lt;=right; i++) &#123;
-        <span class="hljs-keyword">if</span>(nums[i] &lt; nums[pivot]) &#123;
-            <span class="hljs-comment">// 遍历，将小于pivot的的元素与当前leftindex的元素交换，leftindex自增</span>
-            [nums[i],nums[leftIndex]] = [nums[leftIndex], nums[i]];
-            leftIndex++;
-        &#125;
-    &#125;
-    <span class="hljs-comment">// 将pivot所在的元素与自增后的leftindex所指元素交换，即可分好区</span>
-    [nums[pivot],nums[leftIndex]] = [nums[leftIndex], nums[pivot]];
-    <span class="hljs-comment">// 返回交换完的pivot所在位置</span>
-    <span class="hljs-keyword">return</span> leftIndex;
-&#125;</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;number[]&#125;</span> <span class="hljs-variable">nums</span></span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return <span class="hljs-type">&#123;number[]&#125;</span></span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> sortArray = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) </span>&#123;<br>    <span class="hljs-keyword">if</span>(nums.length &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> nums;<br>    quickSort(nums,<span class="hljs-number">0</span>,nums.length-<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> nums;<br>&#125;;<br><span class="hljs-comment">// 递归</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">quickSort</span>(<span class="hljs-params">nums, left, right</span>) </span>&#123;<br>    <span class="hljs-keyword">if</span>(left&gt;=right) <span class="hljs-keyword">return</span>;<br>    <span class="hljs-keyword">let</span> partitionIndex = partition(nums,left, right);<br>    quickSort(nums,partitionIndex+<span class="hljs-number">1</span>, right);<br>    quickSort(nums,left, partitionIndex-<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> nums;<br>&#125;<br><span class="hljs-comment">// 分区</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">partition</span>(<span class="hljs-params">nums, left, right</span>) </span>&#123;	<br>    <span class="hljs-keyword">let</span> pivot = right; 		<span class="hljs-comment">//规定pivot为序列最右值</span><br>    <span class="hljs-keyword">let</span> leftIndex = left;	<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = left; i&lt;=right; i++) &#123;<br>        <span class="hljs-keyword">if</span>(nums[i] &lt; nums[pivot]) &#123;<br>            <span class="hljs-comment">// 遍历，将小于pivot的的元素与当前leftindex的元素交换，leftindex自增</span><br>            [nums[i],nums[leftIndex]] = [nums[leftIndex], nums[i]];<br>            leftIndex++;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// 将pivot所在的元素与自增后的leftindex所指元素交换，即可分好区</span><br>    [nums[pivot],nums[leftIndex]] = [nums[leftIndex], nums[pivot]];<br>    <span class="hljs-comment">// 返回交换完的pivot所在位置</span><br>    <span class="hljs-keyword">return</span> leftIndex;<br>&#125;<br></code></pre></td></tr></table></figure>
 <table>
 <thead>
 <tr>
@@ -386,7 +336,7 @@
 </tbody>
 </table>
 
-            </article>
+            </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
@@ -401,11 +351,9 @@
                 
               </div>
               
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
-              
-                <div class="post-prevnext row">
-                  <div class="post-prev col-6">
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
                     
                     
                       <a href="/2021/09/20/Windows%20Terminal%E4%B8%8ESSH/">
@@ -414,8 +362,8 @@
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
-                  </div>
-                  <div class="post-next col-6">
+                  </article>
+                  <article class="post-next col-6">
                     
                     
                       <a href="/2020/08/18/%E5%A0%86%E5%92%8C%E6%A0%88%E7%9A%84%E5%8C%BA%E5%88%AB/">
@@ -424,38 +372,46 @@
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
-                  </div>
+                  </article>
                 </div>
               
             </div>
 
             
               <!-- Comments -->
-              <div class="comments" id="comments">
+              <article class="comments" id="comments" lazyload>
+                
+                  
                 
                 
   <script type="text/javascript">
-    function loadUtterances() {
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
       var s = document.createElement('script');
       s.setAttribute('src', 'https://utteranc.es/client.js');
-      s.defer = false
       s.setAttribute('repo', 'iniFeng/commit-utterances');
       s.setAttribute('issue-term', 'pathname');
       
-      s.setAttribute('label', 'utterances');
-      
-      s.setAttribute('theme', 'github-light');
+      s.setAttribute('theme', schema);
       s.setAttribute('crossorigin', 'anonymous');
-      var e = document.getElementsByTagName('script')[0];
-      e.parentNode.insertBefore(s, e);
-    }
-    createObserver(loadUtterances, 'comments')
+      document.getElementById('comments').appendChild(s);
+    })
   </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </div>
+              </article>
             
-          </div>
+          </article>
         </div>
       </div>
     </div>
@@ -463,7 +419,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div id="tocbot"></div>
+  <div class="toc-body" id="toc-body"></div>
 </div>
 
       </div>
@@ -475,16 +431,15 @@
 
 
     
-  </main>
 
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
@@ -505,44 +460,16 @@
     </div>
   </div>
 </div>
-  
-
-  
-    <!-- APlayer 音乐播放器 -->
-    <div id="aplayer"></div>
-    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
-<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
-<script type="text/javascript">
-  var oldLoadAp = window.onload;
-  window.onload = function () {
-    oldLoadAp && oldLoadAp();
-
-    new APlayer({
-      container: document.getElementById('aplayer'),
-      fixed: true,
-      autoplay: 'false' === 'true',
-      loop: 'all',
-      order: 'random',
-      theme: '#b7daff',
-      preload: 'none',
-      audio: [{"name":"DAYBREAK FRONTLINE","artist":"めありー Orangestar","url":"http://music.163.com/song/media/outer/url?id=557579433","cover":"/img/cover-daybreakfrontline.jpg"},{"name":"アオイハルカゼ","artist":"H△G","url":"http://music.163.com/song/media/outer/url?id=536623585","cover":"/img/cover-アオイハルカゼ.jpg"}]
-    });
-  }
-</script>
-
-  
-
-  
-
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
-    </div>
     
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
   <div class="statistics">
     
     
@@ -568,29 +495,60 @@
   </div>
 
 
-    
+  
 
-    
-  </div>
+  
 </footer>
 
-<!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 <!-- Plugins -->
 
 
+  <script  src="/js/local-search.js" ></script>
+
+
+
   
-    <script  src="/js/lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
 
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
 
 
 
@@ -599,95 +557,15 @@
 
 
 
-
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
   <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
-
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: 'article.markdown-body',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
-      }
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "使用JavaScript实现各种排序算法&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
       
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
-      }
-    );
+      typing(title)
+      
+    })(window, document);
   </script>
 
 
@@ -704,9 +582,8 @@
 
 
 
-
-
-
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
 
 
 </body>
